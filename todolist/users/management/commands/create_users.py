@@ -9,10 +9,11 @@ class Command(BaseCommand):
         parser.add_argument('count', type=int)
 
     def handle(self, *args, **options):
-        CustomUser.objects.all().delete()
         count = options['count']
-        for i in range(count):
-            user = CustomUser.objects.create(username=f'uname{i}', firstname=f'fname{i}',
-                                             lastname=f'lname{i}', email=f'uname{i}@gmail.com')
-            print(f'user {user} created')
+        for i in range(1, count + 1):
+            user = CustomUser.objects.create(username=f'uname{i}',
+                                             first_name=f'fname{i}',
+                                             last_name=f'lname{i}',
+                                             email=f'uname_{i}@mail.com')
+            print(f'{user} created')
         print('done')
