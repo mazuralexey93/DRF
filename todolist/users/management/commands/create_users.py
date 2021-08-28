@@ -11,9 +11,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         count = options['count']
         for i in range(1, count + 1):
-            user = CustomUser.objects.create(username=f'uname{i}',
-                                             first_name=f'fname{i}',
-                                             last_name=f'lname{i}',
-                                             email=f'uname_{i}@mail.com')
+            user = CustomUser.objects.create_user(username=f'uname_{i}',
+                                             first_name=f'fname_{i}',
+                                             last_name=f'lname_{i}',
+                                             email=f'email_{i}@mail.com')
             print(f'{user} created')
         print('done')

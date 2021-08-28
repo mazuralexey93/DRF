@@ -10,9 +10,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         username = options['username']
         user = CustomUser.objects.create_superuser(username=f'{username}',
-                                                   first_name=f'fname{username}',
-                                                   last_name=f'lname{username}',
-                                                   email=f'uname_{username}@mail.com',
+                                                   first_name=f'fname_{username}',
+                                                   last_name=f'lname_{username}',
+                                                   email=f'email_{username}@mail.com',
                                                    password='geekbrains')
         print(f'{user} created')
 
