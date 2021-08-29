@@ -1,15 +1,9 @@
 import React from 'react';
 
-const Menu = ({menu}) => {
-    return (
-       <table>
-           <th> Home </th>
-           <th> Notes< /th>
-           <th> Status </th>
-           <th> Exit </th>
-       </table>
-    )
-}
+const Menu = () => {
+    return (<div className='header'>Header</div>
+    );
+};
 
 export default Menu;
 

@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # 3-d part apps
     'rest_framework',
     'corsheaders',
+
     # custom apps
     'users',
 ]
@@ -134,4 +136,6 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://10.0.2.15:3000',
+
 ]

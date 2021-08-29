@@ -1,16 +1,9 @@
 import React from 'react';
 
-const Footer = ({footer}) => {
-    return (
-       <table>
-           <th> Contacts </th>
-           <th> Links </th>
-           <th> Forum </th>
-           <th> gb 2021 </th>
-       </table>
-
-    )
-}
+const Footer = () => {
+    return (<div className='footer'>Footer</div>
+    );
+};
 
 export default Footer;
 
