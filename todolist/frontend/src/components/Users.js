@@ -28,9 +28,9 @@ const UsersList = ({users}) => {
                 <th>Last name</th>
                 <th>Email</th>
             </tr>
-
-            {users.map((user) => <UserItem user={user} />)}
+            {users.map((user) => <UserItem user={user}/>)}
         </table>
     )
 }
+
 export default UsersList;
