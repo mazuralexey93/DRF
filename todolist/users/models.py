@@ -11,7 +11,5 @@ class CustomUser(AbstractUser):
 
 class CustomUserRole(models.Model):
     role = models.CharField(max_length=128)
-    user = models.OneToOneField(CustomUser)
+    user = models.OneToOneField(CustomUser, models.CASCADE)
 
-    def __str__(self):
-        return f'{self.role}'

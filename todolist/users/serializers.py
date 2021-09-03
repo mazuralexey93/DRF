@@ -1,17 +1,22 @@
-from rest_framework.serializers import HyperlinkedModelSerializer
-from rest_framework import serializers
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
 
-from mainapp import serializers
+
 from users.models import CustomUser, CustomUserRole
 
 
-class CustomUserSerializer(HyperlinkedModelSerializer):
+# class UserSerializer(HyperlinkedModelSerializer):
+class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['username', 'first_name', 'last_name', 'email']
 
 
-class CustomUserSRoleSerializer(serializers.ModelSerializer):
-    model = CustomUserRole
-    role = serializers.CharField(max_length=128)
-    user = CustomUserSerializer()
+class UsersRoleSerializer(ModelSerializer):
+    # user = CustomUserSerializer()
+
+    class Meta:
+        model = CustomUserRole
+        fields = '__all__'
+
+
+
