@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 
 
 const API_ROOT = 'http://127.0.0.1:8000/api/';
-const get_url = (name) => `${API_ROOT}${name}`;
+const getUrl = (name) => `${API_ROOT}${name}`;
 
 class App extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class App extends React.Component {
     componentDidMount() {
 
         axios
-            .get(get_url('users'))
+            .get(getUrl('users'))
             .then(response => {
                 const users = response.data;
                 this.setState({

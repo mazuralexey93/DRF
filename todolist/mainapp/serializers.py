@@ -1,4 +1,4 @@
-from rest_framework.relations import StringRelatedField
+from rest_framework.relations import StringRelatedField, HyperlinkedIdentityField
 from rest_framework.serializers import ModelSerializer
 
 from mainapp.models import Project, ToDo
@@ -16,6 +16,9 @@ class ProjectSerializer(ModelSerializer):
 
 
 class ToDoSerializer(ModelSerializer):
+    project = HyperlinkedIdentityField(view_name='project_details')
+    user = HyperlinkedIdentityField(view_name='user_details')
+
     class Meta:
         model = ToDo
         # fields = ['name', 'link']
