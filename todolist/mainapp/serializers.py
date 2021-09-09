@@ -11,15 +11,13 @@ class ProjectSerializer(ModelSerializer):
 
     class Meta:
         model = Project
-        # fields = ['name', 'users']
         fields = '__all__'
 
 
 class ToDoSerializer(ModelSerializer):
-    project = HyperlinkedIdentityField(view_name='project_details')
-    user = HyperlinkedIdentityField(view_name='user_details')
+    project = StringRelatedField()
+    user = StringRelatedField()
 
     class Meta:
         model = ToDo
-        # fields = ['name', 'link']
         fields = '__all__'
