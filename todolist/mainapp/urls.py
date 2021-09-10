@@ -7,6 +7,8 @@ mainapp_router = DefaultRouter()
 
 mainapp_router.register('todos', mainapp.ToDoViewSet,
                         basename='todo')  # /views/set/todos
+mainapp_router.register('projects', mainapp.ProjectViewSet,
+                        basename='project')  # /views/set/projects
 mainapp_router.register('filtering', mainapp.ToDoQuerySetFilterViewSet,
                         basename='filter')  # /views/set/filtering
 mainapp_router.register('djangofiltering', mainapp.ArticleDjangoFilterViewSet,
@@ -26,6 +28,11 @@ urlpatterns = [
     path('todo/update/api/view/<int:pk>/', mainapp.ToDoUpdateAPIView.as_view()),
     path('todo/create/api/view/', mainapp.ToDoCreateAPIView.as_view()),
 
+    path('project/list/api/view/', mainapp.ProjectListAPIView.as_view()),
+    path('project/retrieve/api/view/<int:pk>/', mainapp.ProjectRetrieveAPIView.as_view()),
+    path('project/delete/api/view/<int:pk>/', mainapp.ProjectDeleteAPIView.as_view()),
+    path('project/update/api/view/<int:pk>/', mainapp.ProjectUpdateAPIView.as_view()),
+    path('project/create/api/view/', mainapp.ProjectCreateAPIView.as_view()),
 
     path('todo/<str:text>/', mainapp.ToDoKwargsFilterView.as_view())  # views/todo/important/
 

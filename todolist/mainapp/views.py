@@ -24,6 +24,13 @@ class ToDoAPIView(APIView):
         return Response(serializer.data)
 
 
+class ProjectAPIView(APIView):
+    def get(self, request, format=None):
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data)
+
+
 class ToDoCreateAPIView(CreateAPIView):
     """
     !!! NOT NULL constraint failed: mainapp_todo.project_id
@@ -32,10 +39,20 @@ class ToDoCreateAPIView(CreateAPIView):
     serializer_class = ToDoSerializer
 
 
+class ProjectCreateAPIView(CreateAPIView):
+    """!!!"""
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
 class ToDoListAPIView(ListAPIView):
-    # renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+
+
+class ProjectListAPIView(ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
 
 class ToDoRetrieveAPIView(RetrieveAPIView):
@@ -44,14 +61,30 @@ class ToDoRetrieveAPIView(RetrieveAPIView):
     serializer_class = ToDoSerializer
 
 
+class ProjectRetrieveAPIView(RetrieveAPIView):
+    renderer_classes = [JSONRenderer]
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
 class ToDoDeleteAPIView(DestroyAPIView):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
 
 
+class ProjectDeleteAPIView(DestroyAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
 class ToDoUpdateAPIView(UpdateAPIView):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+
+
+class ProjectUpdateAPIView(UpdateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
 
 
 class ToDoViewSet(ViewSet):
@@ -69,6 +102,18 @@ class ToDoViewSet(ViewSet):
     def is_active(self, request, pk=None):
         todo = get_object_or_404(ToDo, pk=pk)
         return Response({'todo.is_active': todo.is_active})
+
+
+class ProjectViewSet(ViewSet):
+    def list(self, request):
+        projects = Project.objects.all()
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        project = get_object_or_404(ToDo, pk=pk)
+        serializer = ProjectSerializer(project)
+        return Response(serializer.data)
 
 
 class ToDoQuerySetFilterViewSet(ModelViewSet):
