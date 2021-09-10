@@ -24,7 +24,7 @@ from users.views import CustomUserViewSet
 router = DefaultRouter()
 router.register('users', CustomUserViewSet)
 router.register('projects', ProjectsViewSet)
-router.register('todos', ToDoViewSet)
+# router.register('todos', ToDoViewSet)
 
 
 urlpatterns = [
