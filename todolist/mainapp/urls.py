@@ -9,13 +9,15 @@ mainapp_router.register('todos', mainapp.ToDoViewSet,
                         basename='todo')  # /views/set/todos
 mainapp_router.register('projects', mainapp.ProjectViewSet,
                         basename='project')  # /views/set/projects
-mainapp_router.register('filtering', mainapp.ToDoQuerySetFilterViewSet,
-                        basename='filter')  # /views/set/filtering
-mainapp_router.register('djangofiltering', mainapp.ArticleDjangoFilterViewSet,
-                        basename='djangofilter')  # /views/set/djangofiltering
-mainapp_router.register('customfilter', mainapp.ArticleCustomDjangoFilterViewSet,
-                        basename='custom')  # /views/set/customfilter,
-mainapp_router.register('pagination', mainapp.ArticleLimitOffsetPaginatonViewSet,
+# mainapp_router.register('filtering', mainapp.ToDoQuerySetFilterViewSet,
+#                         basename='filter')  # /views/set/filtering
+# mainapp_router.register('djangofiltering', mainapp.ToDoDjangoFilterViewSet,
+#                         basename='djangofilter')  # /views/set/djangofiltering
+mainapp_router.register('customtodofilter', mainapp.ToDoCustomDjangoFilterViewSet,
+                        basename='custom')  # /views/set/customtodofilter,
+mainapp_router.register('customprojectfilter', mainapp.ProjectCustomDjangoFilterViewSet,
+                        basename='custom')  # /views/set/customprojectfilter,
+mainapp_router.register('pagination', mainapp.ToDoLimitOffsetPaginatonViewSet,
                         basename='pagination')  # /views/set/pagination,
 
 urlpatterns = [
@@ -34,7 +36,7 @@ urlpatterns = [
     path('project/update/api/view/<int:pk>/', mainapp.ProjectUpdateAPIView.as_view()),
     path('project/create/api/view/', mainapp.ProjectCreateAPIView.as_view()),
 
-    path('todo/<str:text>/', mainapp.ToDoKwargsFilterView.as_view())  # views/todo/important/
+    # path('todo/<str:text>/', mainapp.ToDoKwargsFilterView.as_view())  # views/todo/important/
 
 
 ]

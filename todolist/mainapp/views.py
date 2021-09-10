@@ -8,13 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from mainapp.serializers import ProjectSerializer, ToDoSerializer
-from .filters import ToDoFilter
+from .filters import ToDoFilter, ProjectFilter
 from .models import Project, ToDo
-
-
-class ProjectsViewSet(ModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
 
 
 class ToDoAPIView(APIView):
@@ -126,39 +121,47 @@ class ToDoQuerySetFilterViewSet(ModelViewSet):
         text_contains = self.request.query_params.get('text', '')
         return qs.filter(text__contains=text_contains)
 
+#
+# class ToDoKwargsFilterView(ListAPIView):
+#     """http://127.0.0.1:8000/views/todo/important/"""
+#     serializer_class = ToDoSerializer
+#     queryset = ToDo.objects.all()
+#
+#     def get_queryset(self):
+#         qs = super().get_queryset()
+#         text_contains = self.kwargs.get('text', '')
+#         return qs.filter(text__contains=text_contains)
 
-class ToDoKwargsFilterView(ListAPIView):
-    """http://127.0.0.1:8000/views/todo/important/"""
-    serializer_class = ToDoSerializer
-    queryset = ToDo.objects.all()
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        text_contains = self.kwargs.get('text', '')
-        return qs.filter(text__contains=text_contains)
+#
+# class ToDoDjangoFilterViewSet(ModelViewSet):
+#     """http://127.0.0.1:8000/views/set/djangofiltering/?text=sdsdssax"""
+#     renderer_classes = [JSONRenderer]
+#     queryset = ToDo.objects.all()
+#     serializer_class = ToDoSerializer
+#     filterset_fields = ['text', 'user']
 
 
-class ArticleDjangoFilterViewSet(ModelViewSet):
-    """http://127.0.0.1:8000/views/set/djangofiltering/?text=sdsdssax"""
-    renderer_classes = [JSONRenderer]
-    queryset = ToDo.objects.all()
-    serializer_class = ToDoSerializer
-    filterset_fields = ['text', 'user']
-
-
-class ArticleCustomDjangoFilterViewSet(ModelViewSet):
-    """http://127.0.0.1:8000/views/set/customfilter/?text=important%20todo!"""
+class ToDoCustomDjangoFilterViewSet(ModelViewSet):
+    """http://127.0.0.1:8000/views/set/customtodofilter/?text=important%20todo!"""
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
     filterset_class = ToDoFilter
 
 
+class ProjectCustomDjangoFilterViewSet(ModelViewSet):
+    """http://127.0.0.1:8000/views/set/customprojectfilter/?name=project2"""
+    renderer_classes = [JSONRenderer]
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filterset_class = ProjectFilter
+
+
 class LimitOffsetPaginationByTwo(LimitOffsetPagination):
     default_limit = 2
 
 
-class ArticleLimitOffsetPaginatonViewSet(ModelViewSet):
+class ToDoLimitOffsetPaginatonViewSet(ModelViewSet):
     """http://127.0.0.1:8000/views/set/pagination/"""
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer

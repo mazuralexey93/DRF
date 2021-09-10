@@ -18,7 +18,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 import mainapp
-from mainapp.views import ProjectsViewSet, ToDoViewSet
+from mainapp.views import ProjectViewSet, ToDoViewSet
 from users.views import CustomUserViewSet
 
 router = DefaultRouter()
