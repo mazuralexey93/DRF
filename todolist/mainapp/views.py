@@ -1,6 +1,7 @@
 from rest_framework.decorators import action
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, \
     get_object_or_404
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -106,3 +107,14 @@ class ArticleCustomDjangoFilterViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
     filterset_class = ToDoFilter
+
+
+class LimitOffsetPaginationByTwo(LimitOffsetPagination):
+    default_limit = 2
+
+
+class ArticleLimitOffsetPaginatonViewSet(ModelViewSet):
+    """http://127.0.0.1:8000/views/set/pagination/"""
+    queryset = ToDo.objects.all()
+    serializer_class = ToDoSerializer
+    pagination_class = LimitOffsetPaginationByTwo
