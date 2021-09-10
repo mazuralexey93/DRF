@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # 3-d part apps
     'rest_framework',
     'corsheaders',
+    'django_filters',
 
     # custom apps
     'users',
