@@ -32,7 +32,7 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = ToDoSerializer
     pagination_class = ToDoPaginator
     filterset_class = ToDoFilter
-    filter_backends = [DjangoFilterBackend]
+
 
     # renderer_classes = JSONRenderer
 

@@ -1,9 +1,13 @@
 import './App.css';
 import React from 'react';
-import UsersList from "./components/Users";
+
 import axios from "axios";
 import Menu from "./components/Menu";
 import Footer from "./components/Footer";
+import UsersList from "./components/Users";
+import ProjectsList from "./components/Projects";
+import ToDosList from "./components/ToDos";
+
 
 
 const API_ROOT = 'http://127.0.0.1:8000/api/';
@@ -17,19 +21,19 @@ class App extends React.Component {
         };
     }
 
-    componentDidMount() {
-
-        axios
-            .get(getUrl('users'))
-            .then(response => {
-                const users = response.data;
-                this.setState({
-                        'users': users
-                    }
-                )
-            })
-            .catch(error => console.log(error))
-    }
+    // componentDidMount() {
+    //
+    //     axios
+    //         .get(getUrl('users'))
+    //         .then(response => {
+    //             const users = response.data;
+    //             this.setState({
+    //                     'users': users
+    //                 }
+    //             )
+    //         })
+    //         .catch(error => console.log(error))
+    // }
 
     render() {
         return (
@@ -39,8 +43,8 @@ class App extends React.Component {
                 <Footer/>
             </div>
         );
-    };
-};
+    }
+}
 
 
 export default App;
