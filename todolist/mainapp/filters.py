@@ -4,11 +4,13 @@ from django_filters.rest_framework import FilterSet
 
 
 class ToDoFilter(FilterSet):
-    name = filters.CharFilter(lookup_expr='contains')
+    project = filters.CharFilter(field_name='project', lookup_expr='contains')
+    min_date = filters.DateFilter(field_name='created_at', lookup_expr='gte')
+    max_date = filters.DateFilter(field_name='created_at', lookup_expr='lte')
 
     class Meta:
         model = ToDo
-        fields = ['text']
+        fields = ['project', 'created_at']
 
 
 class ProjectFilter(FilterSet):
