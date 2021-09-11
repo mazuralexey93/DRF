@@ -7,7 +7,7 @@ const UserItem = ({user}) => {
             <td>{user.username}</td>
             <td>{user.first_name}</td>
             <td>{user.last_name}</td>
-            <td> {user.email}</td>
+            <td>{user.email}</td>
         </tr>
     );
 };
@@ -15,14 +15,18 @@ const UserItem = ({user}) => {
 const UsersList = ({users}) => {
     return (
         <table className='table'>
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Username</th>
-                <th>First name</th>
-                <th>Last name</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
                 <th>Email</th>
             </tr>
-            {users.map((user) => <UserItem user={user}/>)}
+            </thead>
+            <tbody>
+            {users.map((user) => <UserItem  key={user.id} user={user}/>)}
+            </tbody>
         </table>
     );
 };

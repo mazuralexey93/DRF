@@ -14,14 +14,17 @@ const ProjectItem = ({project}) => {
 const ProjectsList = ({projects}) => {
     return (
         <table className='table'>
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Link</th>
                 <th>Users</th>
-
             </tr>
-            {projects.map((project) => <ProjectItem project={project}/>)}
+            </thead>
+            <tbody>
+            {projects.map((project) => <ProjectItem key={project.id} project={project}/>)}
+            </tbody>
         </table>
     );
 };

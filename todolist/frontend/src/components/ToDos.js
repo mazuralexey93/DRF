@@ -15,15 +15,20 @@ const ToDoItem = ({todo}) => {
 const ToDosList = ({todos}) => {
     return (
         <table className='table'>
+            <thead>
             <tr>
                 <th>ID</th>
                 <th>Text</th>
                 <th>Project</th>
                 <th>User</th>
                 <th>Is_active</th>
-
             </tr>
-            {todos.map((todo) => <ToDoItem todo={todo}/>)}
+            </thead>
+            <tbody>
+            {todos.map((todo) => <ToDoItem key={todo.id} todo={todo}/>)}
+            </tbody>
+
+
         </table>
     );
 };
