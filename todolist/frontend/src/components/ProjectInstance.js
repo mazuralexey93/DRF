@@ -14,10 +14,11 @@ const ProjectItem = ({project}) => {
 
 const ProjectInstance = ({projects}) => {
     let {id} = useParams()
-    let projectDetails = projects.filter((project) => project.id === +id)
+    let filteredProjects = projects.filter((project) => project.id === +id)
     return (
         <table className='table'>
             <thead>
+            <tr><th>PROJECT DETAILS</th></tr>
             <tr>
                 <th>ID</th>
                 <th>Title</th>
@@ -26,7 +27,7 @@ const ProjectInstance = ({projects}) => {
             </tr>
             </thead>
             <tbody>
-            {projectDetails.map((project) => <ProjectItem key={project.id} project={project}/>)}
+            {filteredProjects.map((project) => <ProjectItem key={project.id} project={project}/>)}
             </tbody>
         </table>
     );

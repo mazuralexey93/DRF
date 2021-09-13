@@ -9,6 +9,7 @@ const ToDoItem = ({todo}) => {
             <td>{todo.created_at}</td>
             <td>{todo.user}</td>
             <td>{todo.updated_at}</td>
+            <td>{todo.status}</td>
         </tr>
     );
 };
@@ -17,6 +18,7 @@ const ToDosList = ({todos}) => {
     return (
         <table className='table'>
             <thead>
+             <tr><th>TODOS</th></tr>
             <tr>
                 <th>ID</th>
                 <th>Text</th>
@@ -24,6 +26,8 @@ const ToDosList = ({todos}) => {
                 <th>created</th>
                 <th>User</th>
                 <th>updated</th>
+                <th>Status</th>
+
             </tr>
             </thead>
             <tbody>

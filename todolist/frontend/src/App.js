@@ -9,7 +9,7 @@ import ProjectsList from "./components/Projects";
 import ToDosList from "./components/ToDos";
 import ProjectInstance from "./components/ProjectInstance";
 
-import {HashRouter, Route, Switch, Link, Redirect} from "react-router-dom";
+import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
 
 
 const pageNotFound404 = ({location}) => {
@@ -71,8 +71,8 @@ class App extends React.Component {
         return (
             <div className={'App'}>
                 <Menu/>
-                <HashRouter>
-                    <nav>
+                <BrowserRouter>
+                    <nav className={'NavBar'}>
                         <ul>
                             <li>
                                 <Link to={'/'}>Users</Link>
@@ -83,10 +83,9 @@ class App extends React.Component {
                             <li>
                                 <Link to={'/todos/'}>todos</Link>
                             </li>
-
-
                         </ul>
                     </nav>
+
                     <Switch>
                         <Route exact path={'/'}
                                component={() => <UsersList users={this.state.users}/> } />
@@ -99,7 +98,7 @@ class App extends React.Component {
                         <Redirect from={'/users/'} to={'/'} />
                         <Route component={pageNotFound404} />
                     </Switch>
-                </HashRouter>
+                </BrowserRouter>
                 <Footer/>
             </div>
         );

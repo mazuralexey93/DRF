@@ -16,6 +16,7 @@ const ProjectsList = ({projects}) => {
     return (
         <table className='table'>
             <thead>
+             <tr><th>PROJECTS</th></tr>
             <tr>
                 <th>ID</th>
                 <th>Title</th>

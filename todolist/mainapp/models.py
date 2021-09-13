@@ -13,9 +13,16 @@ class Project(models.Model):
 
 
 class ToDo(models.Model):
+
+    class ToDoStatusChoices(models.TextChoices):
+        ACTIVE = 'ACT', 'Активно'
+        CLOSED = 'CLS', 'Закрыто'
+
     text = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    is_active = models.BooleanField(default=True)
+    status = models.CharField(max_length=3,
+                              choices=ToDoStatusChoices.choices,
+                              default=ToDoStatusChoices.ACTIVE)
