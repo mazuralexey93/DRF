@@ -5,7 +5,7 @@ from users.models import CustomUser
 
 class Project(models.Model):
     name = models.CharField(max_length=128)
-    link = models.URLField(blank=True)
+    link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(CustomUser)
 
     def __str__(self):

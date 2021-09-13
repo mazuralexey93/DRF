@@ -5,9 +5,10 @@ const ToDoItem = ({todo}) => {
         <tr>
             <td>{todo.id}</td>
             <td>{todo.text}</td>
-            <td>{todo.user}</td>
             <td>{todo.project}</td>
-            <td>{todo.is_active}</td>
+            <td>{todo.created_at}</td>
+            <td>{todo.user}</td>
+            <td>{todo.updated_at}</td>
         </tr>
     );
 };
@@ -20,8 +21,9 @@ const ToDosList = ({todos}) => {
                 <th>ID</th>
                 <th>Text</th>
                 <th>Project</th>
+                <th>created</th>
                 <th>User</th>
-                <th>Is_active</th>
+                <th>updated</th>
             </tr>
             </thead>
             <tbody>
