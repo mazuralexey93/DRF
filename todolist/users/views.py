@@ -12,8 +12,8 @@ class CustomUserViewSet(mixins.ListModelMixin,
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
-
-from rest_framework.authtoken.models import Token
-
-token = Token.objects.create(user=...)
-print(token.key)
+#
+# from rest_framework.authtoken.models import Token
+#
+# token = Token.objects.create(user=...)
+# print(token.key)
