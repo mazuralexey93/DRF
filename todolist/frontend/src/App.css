@@ -69,3 +69,7 @@
 ul {
     list-style: none
 }
+
+.loginForm{
+    padding: 50px;
+}

@@ -8,6 +8,9 @@ class Project(models.Model):
     link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(CustomUser)
 
+    class Meta:
+        ordering = ['pk']
+
     def __str__(self):
         return f' {self.name}'
 
@@ -26,3 +29,6 @@ class ToDo(models.Model):
     status = models.CharField(max_length=3,
                               choices=ToDoStatusChoices.choices,
                               default=ToDoStatusChoices.ACTIVE)
+
+    class Meta:
+        ordering = ['pk']
