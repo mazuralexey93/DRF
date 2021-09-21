@@ -5,7 +5,7 @@ const ProjectItem = ({project}) => {
     return (
         <tr>
             <td>{project.id}</td>
-            <td><Link to={`/project/${project.id}/`}>{project.name}</Link></td>
+            <td><Link to={`/projects/${project.id}/`}>{project.name}</Link></td>
             <td>{project.link}</td>
             <td>{project.users}</td>
         </tr>

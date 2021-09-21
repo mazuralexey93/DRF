@@ -27,7 +27,7 @@ const getUrl = (name) => `${API_ROOT}${name}`;
 class App extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             'users': [],
             'projects': [],
@@ -36,12 +36,14 @@ class App extends React.Component {
         }
     }
 
-// getProject(id) {
-    //     axios.get(getUrl('api/projects/${id}/'))
-    //         .then(response => {
-    //             this.setState({project: response.data})
-    //         }).catch(error => console.log(error))
-    // }
+    getProject(id) {
+        console.log('call', getUrl(`api/projects/${id}`))
+        axios.get(getUrl(`api/projects/${id}`))
+            .then(response => {
+                this.setState({project: response.data})
+                console.log(response.data)
+            }).catch(error => console.log(error))
+    }
 
     logout() {
         this.setToken('');
@@ -71,7 +73,7 @@ class App extends React.Component {
     }
 
     loadData() {
-        if (!this.isAuthenticated()){
+        if (!this.isAuthenticated()) {
             return
         }
         const headers = this.getHeaders()
@@ -139,7 +141,7 @@ class App extends React.Component {
                             </li>
                             <li>
                                 {this.isAuthenticated() ?
-                                    <button onClick={() => this.logout()}>Logout</button>:
+                                    <button onClick={() => this.logout()}>Logout</button> :
                                     <Link to={'/login'}>Login</Link>}
 
                             </li>
@@ -151,8 +153,10 @@ class App extends React.Component {
                                component={() => <UsersList users={this.state.users}/>}/>
                         <Route exact path={'/projects'}
                                component={() => <ProjectsList projects={this.state.projects}/>}/>
-                        <Route exact path={'/project/:id'}
-                               component={() => <ProjectInstance projects={this.state.projects}/>}/>
+                        <Route path={'/projects/:id'}>
+                            <ProjectInstance getProject={(id) => this.getProject(id)}
+                                             project={this.state.project}/>
+                        </Route>
                         <Route exact path={'/login'}>
                             <LoginForm getToken={
                                 (username, password) => this.getToken(username, password)}/>
