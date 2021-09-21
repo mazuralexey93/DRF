@@ -32,18 +32,11 @@ class App extends React.Component {
             'users': [],
             'projects': [],
             'todos': [],
-            'project': {}
+            'project': {},
+            'token' : ''
         }
     }
 
-    getProject(id) {
-        console.log('call', getUrl(`api/projects/${id}`))
-        axios.get(getUrl(`api/projects/${id}`))
-            .then(response => {
-                this.setState({project: response.data})
-                console.log(response.data)
-            }).catch(error => console.log(error))
-    }
 
     logout() {
         this.setToken('');
@@ -119,6 +112,16 @@ class App extends React.Component {
         return this.state.token !== '';
     }
 
+     getProject(id) {
+        const headers = this.getHeaders()
+        console.log('call', getUrl(`api/projects/${id}`))
+        axios.get(getUrl(`api/projects/${id}`), {headers})
+            .then(response => {
+                this.setState({project: response.data})
+                console.log(response.data)
+            }).catch(error => console.log(error))
+    }
+
     componentDidMount() {
         this.getTokenFromStorage();
     }
@@ -154,12 +157,13 @@ class App extends React.Component {
                         <Route exact path={'/projects'}
                                component={() => <ProjectsList projects={this.state.projects}/>}/>
                         <Route path={'/projects/:id'}>
-                            <ProjectInstance getProject={(id) => this.getProject(id)}
-                                             project={this.state.project}/>
+                            <ProjectInstance
+                                getProject={(id) => this.getProject(id)}
+                                             project={this.state.project}
+                            getToken={(username, password) => this.getToken(username, password)}/>
                         </Route>
                         <Route exact path={'/login'}>
-                            <LoginForm getToken={
-                                (username, password) => this.getToken(username, password)}/>
+                            <LoginForm getToken={(username, password) => this.getToken(username, password)}/>
                         </Route>
                         <Route exact path={'/todos'}
                                component={() => <ToDosList todos={this.state.todos}/>}/>

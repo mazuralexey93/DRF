@@ -34,6 +34,7 @@ const ProjectItem = ({project}) => {
 // };
 
 const ProjectInstance = ({getProject, project}) => {
+
     let {id} = useParams();
     console.log(id, project)
     if (!Object.keys(project).length || project.id !== +id) {
@@ -42,7 +43,6 @@ const ProjectInstance = ({getProject, project}) => {
     let users = project.users ? project.users : [];
     return (
         <div>
-
             <h2>{project.name}</h2>
             Link: <a href={project.link}>{project.link}</a>
             <p></p>
