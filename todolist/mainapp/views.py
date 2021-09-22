@@ -22,7 +22,7 @@ class ToDoPaginator(PageNumberPagination):
 class ProjectViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    # pagination_class = ProjectPaginator
+    pagination_class = ProjectPaginator
     filterset_class = ProjectFilter
     # renderer_classes = JSONRenderer
 
@@ -30,7 +30,7 @@ class ProjectViewSet(ModelViewSet):
 class ToDoViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
-    # pagination_class = ToDoPaginator
+    pagination_class = ToDoPaginator
     filterset_class = ToDoFilter
 
 
