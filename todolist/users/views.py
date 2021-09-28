@@ -11,3 +11,8 @@ class CustomUserViewSet(mixins.ListModelMixin,
                         GenericViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
+
+    def create(self):
+        super(CustomUserViewSet, self).create()
+
+
