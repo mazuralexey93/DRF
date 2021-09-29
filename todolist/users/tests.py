@@ -78,26 +78,23 @@ class TestUserViewSet(TestCase):
     def test_get_details(self):
         # 5
         project = Project.objects.create(**self.project)
-        # client = APIClient()
-        client = self.client
-        client.login(username='admin', password='admin')
-        # client.force_authenticate(user=self.user)
+        client = APIClient()
+        client.force_authenticate(user=self.user)
         response = client.get(f'/api/projects/{project.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # print(response.content)
         client.logout()
 
     def test_edit(self):
-        # 5
+        # 6
         project = Project.objects.create(**self.project)
         client = APIClient()
         client.login(username='admin', password='admin')
-        response = client.put(f'/api/projects/{project.id}/', self.project_upd)
+        response = client.put(f'/api/projects/{project.id}/',
+                              self.project_upd)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         project = Project.objects.get(id=project.id)
         self.assertEqual(project.name, self.project_upd['name'])
         self.assertEqual(project.link, self.project_upd['link'])
         client.logout()
         # print(response.content)
-
-
