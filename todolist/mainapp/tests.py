@@ -1,7 +1,11 @@
+import json
+
 from django.contrib.auth import get_user_model
+from mixer.backend.django import mixer
 from rest_framework import status
 from rest_framework.test import APITestCase
 from mainapp.models import Project
+from users.models import CustomUser
 
 
 class TestProjectViewSet(APITestCase):
@@ -26,10 +30,38 @@ class TestProjectViewSet(APITestCase):
     def test_edit_admin(self):
         # 8
         project = Project.objects.create(**self.project)
-        project.users.set([self.admin, self.user])
+        # print(self.project)
         self.client.login(username='admin', password='admin')
         response = self.client.put(f'/api/projects/{project.id}/',
-                                   self.project_upd)
+                                   {'name': 'Project111',
+                                    'link': 'http://localhost/projects/project/111/'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        project = Project.objects.get(id=project.id)
+        self.assertEqual(project.name, 'Project111')
         self.client.logout()
+        # print(response.content)
+
+    def test_edit_admin_mixer(self):
+        # 9
+        project = mixer.blend(Project, users=[self.admin, self.user])
+        # print(self.project)
+        self.client.login(username='admin', password='admin')
+        response = self.client.patch(f'/api/projects/{project.id}/',
+                                     {'link': 'http://localhost/projects/project/111/'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        project = Project.objects.get(id=project.id)
+        self.assertEqual(project.link, 'http://localhost/projects/project/111/')
+        self.client.logout()
+        # print(response.content)
+
+    def test_get_details_mixer(self):
+        # 10
+
+        project = mixer.blend(Project, name='Very important project',
+                              users__last_name='Snow')
+        self.client.login(username='admin', password='admin')
+        response = self.client.get(f'/api/projects/{project.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_project = json.loads(response.content)
+        self.assertEqual(response_project['name'], 'Very important project')
         print(response.content)
