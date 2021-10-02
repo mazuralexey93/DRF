@@ -10,4 +10,3 @@ class CustomUser(AbstractUser):
 
     class Meta:
         ordering = ['pk']
-

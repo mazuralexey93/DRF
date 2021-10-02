@@ -23,4 +23,3 @@ class ToDoSerializer(ModelSerializer):
     class Meta:
         model = ToDo
         fields = '__all__'
-
