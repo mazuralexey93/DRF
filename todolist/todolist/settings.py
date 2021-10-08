@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',  # required for serving swagger ui's css/js, Required for GraphiQL
 
     # 3-d part apps
     'rest_framework',
@@ -36,8 +36,9 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js
+
     'drf_yasg',
+    'graphene_django',
 
     # custom apps
     'users',
@@ -160,3 +161,8 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 
 }
+
+GRAPHENE = {
+    "SCHEMA": "todolist.schema.schema"
+}
+

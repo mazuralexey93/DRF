@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from rest_framework.authtoken.views import obtain_auth_token
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.routers import DefaultRouter
-from rest_framework.schemas import get_schema_view
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -23,7 +22,7 @@ schema_view = get_schema_view(
         license=openapi.License(name="MIT License"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=(permissions.AllowAny, ),
 )
 
 router = DefaultRouter()
@@ -51,4 +50,6 @@ urlpatterns = [
          schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
 
+    path('graphql/',
+         GraphQLView.as_view(graphiql=True))
 ]
