@@ -8,6 +8,7 @@ class Project(models.Model):
     link = models.URLField(blank=True, null=True)
     users = models.ManyToManyField(CustomUser)
 
+
     class Meta:
         ordering = ['pk']
 
