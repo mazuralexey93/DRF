@@ -1,6 +1,5 @@
 import './App.css';
 import React from 'react';
-
 import axios from "axios";
 import Cookies from "universal-cookie/lib";
 import {BrowserRouter, Route, Switch, Link, Redirect} from "react-router-dom";
@@ -33,7 +32,7 @@ class App extends React.Component {
             'projects': [],
             'todos': [],
             'project': {},
-            'token' : ''
+            'token': ''
         }
     }
 
@@ -44,7 +43,7 @@ class App extends React.Component {
 
     getToken(username, password) {
         axios.post(
-            getUrl('api-token-auth/'),
+            getUrl('api/token-auth/'),
             {username: username, password: password})
             .then(response => {
                 this.setToken(response.data['token'])
@@ -126,6 +125,31 @@ class App extends React.Component {
         this.getTokenFromStorage();
     }
 
+    projectDelete(id) {
+        const headers = this.getHeaders()
+        axios
+            .delete(getUrl(`api/projects/${id}/`), {headers})
+            .then(result => {
+                this.setState({
+                    projects: this.state.projects.filter((item) => item.id !== id)
+                })
+            })
+            .catch(error => console.log(error))
+    };
+
+    todoDelete(id) {
+        console.log('delete', id)
+         const headers = this.getHeaders()
+        axios
+            .delete(getUrl(`api/todos/${id}/`), {headers})
+            .then(result => {
+                this.setState({
+                    todos: this.state.todos.filter((item) => item.id !== id)
+                })
+            })
+            .catch(error => console.log(error))
+    };
+
     render() {
         return (
             <div className={'App'}>
@@ -146,7 +170,6 @@ class App extends React.Component {
                                 {this.isAuthenticated() ?
                                     <button onClick={() => this.logout()}>Logout</button> :
                                     <Link to={'/login'}>Login</Link>}
-
                             </li>
                         </ul>
                     </nav>
@@ -155,7 +178,8 @@ class App extends React.Component {
                         <Route exact path={'/'}
                                component={() => <UsersList users={this.state.users}/>}/>
                         <Route exact path={'/projects'}
-                               component={() => <ProjectsList projects={this.state.projects}/>}/>
+                               component={() => <ProjectsList projects={this.state.projects}
+                               projectDelete={(id) => this.projectDelete(id)}/>}/>
                         <Route exact path={'/projects/:id'}
                                component={() => <ProjectInstance getProject={(id) => this.getProject(id)}
                                                                  project={this.state.project}/>}/>
@@ -163,7 +187,8 @@ class App extends React.Component {
                                component={() => <LoginForm
                                    getToken={(username, password) => this.getToken(username, password)}/>}/>
                         <Route exact path={'/todos'}
-                               component={() => <ToDosList todos={this.state.todos}/>}/>
+                               component={() => <ToDosList todos={this.state.todos}
+                               todoDelete={(id) => this.todoDelete(id)}/>}/>
                         <Route component={pageNotFound404}/>
                         <Redirect from={'/users'} to={'/'}/>
                     </Switch>

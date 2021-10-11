@@ -40,10 +40,8 @@ class Query(graphene.ObjectType):
         return ToDo.objects.all()
 
     def resolve_user_by_id(self, info, id):
-        try:
-            return CustomUser.objects.get(id=id)
-        except CustomUser.DoesNotExist:
-            return None
+        return CustomUser.objects.get(id=id)
+
 
     def resolve_todos_by_project_name(self, info, name=None):
         todos = ToDo.objects.all()
