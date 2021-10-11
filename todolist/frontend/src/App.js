@@ -11,6 +11,8 @@ import ProjectsList from "./components/Projects";
 import ToDosList from "./components/ToDos";
 import ProjectInstance from "./components/ProjectInstance";
 import LoginForm from "./components/Auth";
+import ProjectForm from "./components/ProjectForm";
+import TodoForm from "./components/TodoForm";
 
 
 const pageNotFound404 = ({location}) => {
@@ -137,9 +139,27 @@ class App extends React.Component {
             .catch(error => console.log(error))
     };
 
+    projectCreate(name, user) {
+        // console.log('created', name,  )
+        const headers = this.getHeaders()
+        const data = {name: name, user: user}
+        axios
+            .post(getUrl('api/projects/'),
+                {data},
+                {headers})
+            .then(result => {
+                let newProject = result.data;
+                const user = this.state.users.filter((item) => item.id === newProject.user)[0]
+                newProject.user = user
+                this.setState({
+                    projects: [...this.state.projects, newProject]
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
     todoDelete(id) {
-        console.log('delete', id)
-         const headers = this.getHeaders()
+        const headers = this.getHeaders()
         axios
             .delete(getUrl(`api/todos/${id}/`), {headers})
             .then(result => {
@@ -149,6 +169,21 @@ class App extends React.Component {
             })
             .catch(error => console.log(error))
     };
+
+    todoCreate(text, project, user) {
+        const headers = this.getHeaders()
+        axios
+            .post(getUrl('api/todos/'),
+                {text: text, project: project, user: user},
+                {headers})
+            .then(result => {
+                const newTodo = result.data;
+                this.setState({
+                    todos: [...this.state.todos, newTodo]
+                })
+            })
+            .catch(error => console.log(error))
+    }
 
     render() {
         return (
@@ -179,16 +214,25 @@ class App extends React.Component {
                                component={() => <UsersList users={this.state.users}/>}/>
                         <Route exact path={'/projects'}
                                component={() => <ProjectsList projects={this.state.projects}
-                               projectDelete={(id) => this.projectDelete(id)}/>}/>
+                                                              projectDelete={(id) => this.projectDelete(id)}/>}/>
+                        <Route exact path={'/projects/create'}
+                               component={() => <ProjectForm
+                                   users={this.state.users}
+                                   projectCreate={(name, user) => this.projectCreate(name, user)}/>}/>
                         <Route exact path={'/projects/:id'}
                                component={() => <ProjectInstance getProject={(id) => this.getProject(id)}
                                                                  project={this.state.project}/>}/>
+                        <Route exact path={'/todos'}
+                               component={() => <ToDosList todos={this.state.todos}
+                                                           todoDelete={(id) => this.todoDelete(id)}/>}/>
+                        <Route exact path={'/todos/create'}
+                               component={() => <TodoForm
+                                   users={this.state.users}
+                                   projects={this.state.projects}
+                                   todoCreate={(text, project, user) => this.todoCreate(text, project, user)}/>}/>
                         <Route exact path={'/login'}
                                component={() => <LoginForm
                                    getToken={(username, password) => this.getToken(username, password)}/>}/>
-                        <Route exact path={'/todos'}
-                               component={() => <ToDosList todos={this.state.todos}
-                               todoDelete={(id) => this.todoDelete(id)}/>}/>
                         <Route component={pageNotFound404}/>
                         <Redirect from={'/users'} to={'/'}/>
                     </Switch>
