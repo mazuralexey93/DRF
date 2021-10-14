@@ -1,6 +1,7 @@
 import React from 'react'
 
 
+
 class TodoForm extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +26,7 @@ class TodoForm extends React.Component {
 
     render() {
         return (
-            <form className="todoForm"
+            <form className="loginForm"
                   onSubmit={(event) => this.handlerOnSubmit(event)}>
                 <input type="text" name="text" placeholder="text" value={this.state.text}
                        onChange={(event) => this.handlerOnChange(event)}/>

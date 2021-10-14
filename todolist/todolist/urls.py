@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from rest_framework.authtoken.views import obtain_auth_token
@@ -31,7 +32,6 @@ router.register('todos', ToDoViewSet)
 router.register('projects', ProjectViewSet)
 
 urlpatterns = [
-
     path('api/', include(router.urls)),
     re_path(r'^api/(?P<version>\d\.\d)/', include(router.urls)),
     path('admin/', admin.site.urls),

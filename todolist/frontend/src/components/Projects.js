@@ -1,5 +1,8 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import searchTextChange from '../App.js'
+import findProjects from '../App.js'
+
 
 const ProjectItem = ({project, projectDelete}) => {
     return (
@@ -19,7 +22,14 @@ const ProjectItem = ({project, projectDelete}) => {
 
 const ProjectsList = ({projects, projectDelete}) => {
     return (
-        <div className="projects-list">
+       <form>
+            <div className="projects-list">
+            {/*<input type="text" placeholder="Search..."*/}
+            {/*           onChange={(event) =>*/}
+            {/*               new searchTextChange(event.target.value)} />*/}
+            {/*    <button onClick={findProjects}>Search</button>*/}
+
+
             <table className='table'>
                 <thead>
                 <tr>
@@ -41,6 +51,7 @@ const ProjectsList = ({projects, projectDelete}) => {
             </table>
             <Link to="/projects/create/"> New Project </Link>
         </div>
+       </form>
     )
 };
 

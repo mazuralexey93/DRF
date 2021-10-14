@@ -6,7 +6,6 @@ class ProjectForm extends React.Component {
         super(props);
         this.state = {
             name: "",
-            user: 0
         }
     }
 

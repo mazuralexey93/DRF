@@ -34,10 +34,48 @@ class App extends React.Component {
             'projects': [],
             'todos': [],
             'project': {},
-            'token': ''
+            'token': '',
+            'search_todos': [],
+            'search_projects': [],
+            searchText: '',
+
         }
     }
 
+    projectSearch(text) {
+        let filteredProjects = this.state.search_projects
+        if (text !== '') {
+            filteredProjects = filteredProjects.filter((item) => item.name.includes(text))
+        }
+        this.setState({projects: filteredProjects})
+    }
+
+    todoSearch(text) {
+        let filteredTodos = this.state.search_todos
+        if (text !== '') {
+            filteredTodos = filteredTodos.filter((item) => item.name.includes(text))
+        }
+        this.setState({todos: filteredTodos})
+    }
+
+    searchTextChange(text) {
+        this.setState({'searchText': text})
+        this.projectSearch(text)
+    }
+
+    findProjects() {
+        console.log('Find:', this.state.searchText)
+        let headers = this.getHeaders()
+        let url = '/api/projects/';
+        if (this.state.searchText !== '') {
+            url = `/api/projects/?name=${this.state.searchText}`
+        }
+        console.log(url);
+        axios.get(getUrl(url), {headers})
+            .then(response => {
+                this.setState({projects: response.data.result})
+            }).catch(error => console.log(error))
+    }
 
     logout() {
         this.setToken('');
@@ -140,7 +178,6 @@ class App extends React.Component {
     };
 
     projectCreate(name, user) {
-        // console.log('created', name,  )
         const headers = this.getHeaders()
         const data = {name: name, user: user}
         axios
@@ -148,9 +185,7 @@ class App extends React.Component {
                 {data},
                 {headers})
             .then(result => {
-                let newProject = result.data;
-                const user = this.state.users.filter((item) => item.id === newProject.user)[0]
-                newProject.user = user
+                const newProject = result.data;
                 this.setState({
                     projects: [...this.state.projects, newProject]
                 })
@@ -185,6 +220,7 @@ class App extends React.Component {
             .catch(error => console.log(error))
     }
 
+
     render() {
         return (
             <div className={'App'}>
@@ -206,6 +242,12 @@ class App extends React.Component {
                                     <button onClick={() => this.logout()}>Logout</button> :
                                     <Link to={'/login'}>Login</Link>}
                             </li>
+                            <li>
+                                <input type="text" placeholder="Search..."
+                                       onChange={(event) =>
+                                            this.searchTextChange(event.target.value)}/>
+                                <button onClick={this.findProjects}>Search</button>
+                            </li>
                         </ul>
                     </nav>
 
@@ -213,8 +255,12 @@ class App extends React.Component {
                         <Route exact path={'/'}
                                component={() => <UsersList users={this.state.users}/>}/>
                         <Route exact path={'/projects'}
-                               component={() => <ProjectsList projects={this.state.projects}
-                                                              projectDelete={(id) => this.projectDelete(id)}/>}/>
+                               component={() => <ProjectsList users={this.state.users}
+                                                              projects={this.state.projects}
+                                                              projectDelete={(id) => this.projectDelete(id)}
+                                                              searchTextChange={(text) => this.searchTextChange(text)}
+                                                              projectSearch={() => this.findProjects()}/>}/>
+
                         <Route exact path={'/projects/create'}
                                component={() => <ProjectForm
                                    users={this.state.users}
@@ -224,6 +270,8 @@ class App extends React.Component {
                                                                  project={this.state.project}/>}/>
                         <Route exact path={'/todos'}
                                component={() => <ToDosList todos={this.state.todos}
+                                                           users={this.state.users}
+                                                           projects={this.state.projects}
                                                            todoDelete={(id) => this.todoDelete(id)}/>}/>
                         <Route exact path={'/todos/create'}
                                component={() => <TodoForm
@@ -239,7 +287,8 @@ class App extends React.Component {
                 </BrowserRouter>
                 <Footer/>
             </div>
-        );
+        )
+            ;
     }
 }
 
