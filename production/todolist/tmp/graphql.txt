@@ -1,0 +1,95 @@
+Пример запроса ко всем проектам с вложенностью пользователей
+Примечательно, можем вытащать пароль, пусть и хэшированный
+
+{
+  allProjects {
+    id
+    name
+    link
+    users {
+      username
+      password
+    }
+  }
+}
+
+
+#  Запрос к нескольким спискам
+{
+  allProjects {
+    name
+  }
+  allUsers {
+    username
+  }
+}
+
+#  Элиасы
+{
+  allProjects {
+    name
+  }
+  projectsAgain : allProjects{
+    name
+  }
+}
+
+#  related_name / set
+{
+  allProjects {
+    name
+    todoSet {
+      id
+      status
+    }
+  }
+}
+
+#  конкретный юзер из модели
+{
+  userById(id: 7) {
+    username
+    isActive
+  }
+}
+
+#  фильтрация тудушек по имени проекта
+{
+  todosByProjectName(name: "project2") {
+    createdAt
+    status
+  }
+}
+
+#  patch
+mutation {
+  updateProject(name: "mutant project", id: 1) {
+    project {
+      id
+      name
+      users {
+        username
+        email
+      }
+    }
+  }
+}
+
+получить тудушки, проекты и пользователей, связанных с проектом.
+
+{
+  allProjects {
+    id
+    name
+    todoSet {
+      id
+      createdAt
+      status
+    }
+    users{
+      username
+      email
+    }
+  }
+
+}

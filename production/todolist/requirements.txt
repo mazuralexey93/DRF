@@ -1,0 +1,13 @@
+Django==3.1
+django-cors-headers==3.8
+django-environ==0.4.5
+django-filter==2.4
+djangorestframework==3.12
+djangorestframework-jwt==1.11
+djangorestframework-simplejwt
+Markdown
+mixer
+graphene
+graphene-django
+drf-yasg==1.20
+psycopg2-binary
